@@ -5,7 +5,7 @@ const oldTodo = [
 
 
 const ul = document.querySelector("#containerTodo")
-const getDataAndDisplay = (data) => {
+const getDataAndDisplay = (data, container) => {
     data.forEach(x => {
         const li = document.createElement('li')
         li.innerText = x.name;
@@ -15,7 +15,7 @@ const getDataAndDisplay = (data) => {
         checkbox.setAttribute('value', x.completed)
         const btnDel = document.createElement('button')
         btnDel.innerText = '🌩️';
-        ul.append(li)
+        container.append(li)
         li.append(checkbox)
         li.append(btnDel)
         if (x.completed) {
@@ -23,13 +23,8 @@ const getDataAndDisplay = (data) => {
             li.style.textDecoration = 'line-through';
         }
         checkbox.addEventListener('click', (e) => {
-            if (e.target.checked) {
-                e.value = true
-                li.style.textDecoration = 'line-through';
+            handleCheckbox(e, li)
 
-            } else {
-                li.style.textDecoration = '';
-            }
         })
 
         btnDel.addEventListener('click', () => { handleDelete(x.id, data) })
@@ -45,4 +40,14 @@ const handleDelete = (id, data) => {
     console.log(filteredData);
 
 }
-getDataAndDisplay(oldTodo)
+const handleCheckbox = (event, task) => {
+    if (event.target.checked) {
+        event.value = true
+        task.style.textDecoration = 'line-through';
+
+    } else {
+        task.style.textDecoration = '';
+    }
+
+}
+getDataAndDisplay(oldTodo, ul)

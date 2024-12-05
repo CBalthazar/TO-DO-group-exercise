@@ -13,14 +13,14 @@ async function mock_fetch(ms) {
     // va chercher les données distantes
     await new Promise((resolve) => setTimeout(resolve, ms));
     // appelle la fonction qui stocke les données
-    let storedData = JSON.parse(localStorage.getItem("todos"));
+    let storedData = JSON.parse(localStorage.getItem("todos") || []);
     console.log(storedData);
-    if (storedData) {
-        return getData();
+    if (storedData.length !== 0) {
+        getData();
+    } else {
+        storeData(MOCKED_DATA);
+        getData();
     }
-    storeData(MOCKED_DATA);
-    getData();
-    // return MOCKED_DATA;
 }
 
 
